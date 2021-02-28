@@ -14,9 +14,7 @@ namespace FairtiqParser.Tests
         {
             return new List<object[]>
             {
-                new object[] { "name", "Bill" },
-                new object[] { "name", "Paul" },
-                new object[] { "name", "Steve" }
+                new object[] { "body", System.IO.File.ReadAllText("ressources/body.html") }
 
             };
         }

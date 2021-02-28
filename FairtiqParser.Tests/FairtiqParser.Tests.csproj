@@ -24,4 +24,10 @@
     <ProjectReference Include="..\FairtiqParser\FairtiqParser.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ressources\body.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
