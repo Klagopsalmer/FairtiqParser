@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FairtiqParser.Tests
 {
@@ -28,11 +29,12 @@ namespace FairtiqParser.Tests
             return qs;
         }
 
-        public static HttpRequest CreateHttpRequest(string queryStringKey, string queryStringValue)
+        public static HttpRequest CreateHttpRequest()
         {
             var context = new DefaultHttpContext();
             var request = context.Request;
-            request.Query = new QueryCollection(CreateDictionary(queryStringKey, queryStringValue));
+            var fileStream= new StreamReader("ressources/body.html");
+            request.Body = fileStream.BaseStream;
             return request;
         }
 

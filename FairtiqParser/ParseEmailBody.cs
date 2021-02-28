@@ -7,6 +7,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 
 namespace FairtiqParser
 {
@@ -19,17 +21,19 @@ namespace FairtiqParser
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            // Parse query parameter
+            string emailBodyContent = await new StreamReader(req.Body).ReadToEndAsync();
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            //Select only body section
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(emailBodyContent);
+            HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            // Replace HTML with other characters
+            string updatedBody = bodyNode.InnerText.Replace(@"&nbsp;", " ");
 
-            return new OkObjectResult(responseMessage);
+            // Return cleaned text
+            return (ActionResult)new OkObjectResult(new { updatedBody });
         }
     }
 }

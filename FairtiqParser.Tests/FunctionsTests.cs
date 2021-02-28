@@ -47,7 +47,7 @@ namespace FairtiqParser.Tests
         [Fact]
         public async void Http_trigger_should_return_known_string()
         {
-            var request = TestFactory.CreateHttpRequest("body", System.IO.File.ReadAllText("ressources/body.html"));
+            var request = TestFactory.CreateHttpRequest();
             var response = (OkObjectResult)await ParseEmailBody.Run(request, logger);
             Assert.Equal(JsonConvert.SerializeObject(expectedResponseValueDict), response.Value);
         }
