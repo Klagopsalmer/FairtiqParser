@@ -30,12 +30,12 @@ namespace FairtiqParser.Tests
                     {"Start", "Murten/Morat"},
                     {"ArrivalTime","17:24"},
                     {"Destination","Neuchâtel"},
-                    {"Cost","5.7"}
+                    {"Cost","5.70"}
                 },
                 new Dictionary<string, string>
                 {
                     {"Date", "16.02.2021"},
-                    {"DepartureTime","019:00"},
+                    {"DepartureTime","19:00"},
                     {"Start", "Neuchâtel"},
                     {"ArrivalTime","19:27"},
                     {"Destination","La Chaux-de-Fonds"},
@@ -51,14 +51,5 @@ namespace FairtiqParser.Tests
             var response = (OkObjectResult)await ParseEmailBody.Run(request, logger);
             Assert.Equal(JsonConvert.SerializeObject(expectedResponseValueDict), response.Value);
         }
-
-        //[Theory]
-        //[MemberData(nameof(TestFactory.Data), MemberType = typeof(TestFactory))]
-        //public async void Http_trigger_should_return_known_string_from_member_data(string queryStringKey, string queryStringValue)
-        //{
-        //    var request = TestFactory.CreateHttpRequest(queryStringKey, queryStringValue);
-        //    var response = (OkObjectResult)await ParseEmailBody.Run(request, logger);
-        //    Assert.Equal($"Hello, {queryStringValue}. This HTTP triggered function executed successfully.", response.Value);
-        //}
     }
 }
