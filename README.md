@@ -55,6 +55,6 @@ It takes the [email body](FairtiqParser.Tests/ressources/body.html) as input and
 }
 ```
 ## Ressources
-[Tutorial: Automate tasks to process emails by using Azure Logic Apps, Azure Functions, and Azure Storage](https://docs.microsoft.com/en-us/azure/logic-apps/tutorial-process-email-attachments-workflow)
-[Data security and privacy policies for Google connectors in Azure Logic Apps](https://docs.microsoft.com/fr-fr/azure/connectors/connectors-google-data-security-privacy-policy)
+[Tutorial: Automate tasks to process emails by using Azure Logic Apps, Azure Functions, and Azure Storage](https://docs.microsoft.com/en-us/azure/logic-apps/tutorial-process-email-attachments-workflow)  
+[Data security and privacy policies for Google connectors in Azure Logic Apps](https://docs.microsoft.com/fr-fr/azure/connectors/connectors-google-data-security-privacy-policy)  
 [Gmail connector](https://docs.microsoft.com/fr-fr/connectors/gmail/#authentication-and-bring-your-own-application)
