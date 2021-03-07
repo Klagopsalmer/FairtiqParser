@@ -16,7 +16,7 @@ To add the journeys in an Excel table.
 
 ## Wortking principle
 
-It takes the [email body](FairtiqParser.Tests\ressources\body.html) as input and returns the journey as JSON:
+It takes the [email body](FairtiqParser.Tests/ressources/body.html) as input and returns the journey as JSON:
 
 ```json
 {
