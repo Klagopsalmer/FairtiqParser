@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FairtiqParser
 {
@@ -31,25 +32,31 @@ namespace FairtiqParser
             HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
             // Replace HTML with other characters
-            string updatedBody = bodyNode.InnerText.Replace(@"&nbsp;", " ");
+            string updatedBody = Regex.Replace(bodyNode.InnerText, "<.*?>", string.Empty);
+            updatedBody = updatedBody.Replace("\r\n", " ");
+            updatedBody = updatedBody.Replace(@"&nbsp;", " ");
+            updatedBody = Regex.Replace(updatedBody, " {2,}", " ");
 
-            //Find date
-            Regex dateRx = new Regex(@"\d{2} [A-z]{3} \d{4}");
-            MatchCollection matches = dateRx.Matches(updatedBody);
+            // Split by dates
+            string[] journeysStrings = Regex.Split(updatedBody, @"(\d{2} [A-z]{3} \d{4})");
 
-            DateTime date = DateTime.Parse(matches[1].ToString());
+            // Journeys start at index 5
+            journeysStrings = journeysStrings.Skip(5).ToArray();
 
-            //Find journeys
-            Regex rx = new Regex(@"(\d{2}:\d{2}) ([A-zÀ-ÿ -\/]+)   [^\x00-\x7F] (\d{2}:\d{2}) ([A-zÀ-ÿ -\/]+)  CHF (\d*.\d{2})");
-
-            matches = rx.Matches(updatedBody);
-
-            var result = new Dictionary<string, string>[matches.Count];
-
-            int index = 0;
-            foreach (Match match in matches)
+            // Iterates over journeys
+            var result = new List<Dictionary<string, string>>();
+            for (int i = 0; i < journeysStrings.Count(); i += 2)
             {
-                var journey = new Dictionary<string, string>()
+                DateTime date = DateTime.Parse(journeysStrings[i]);
+
+                //Find journeys
+                Regex rx = new Regex(@"(\d{2}:\d{2}) ([A-zÀ-ÿ -\/]+) [^\x00-\x7F] (\d{2}:\d{2}) ([A-zÀ-ÿ -\/]+) 2nd class [^\x00-\x7F] Reduced fare CHF (\d*.\d{2})");
+
+                var matches = rx.Matches(journeysStrings[i+1]);
+
+                foreach (Match match in matches)
+                {
+                    var journey = new Dictionary<string, string>()
                 {
                     {"Date", date.ToShortDateString()},
                     {"DepartureTime",match.Groups[1].ToString()},
@@ -58,12 +65,12 @@ namespace FairtiqParser
                     {"Destination",match.Groups[4].ToString()},
                     {"Cost",match.Groups[5].ToString()}
                 };
-                result[index] = journey;
-                index++;
+                    result.Add(journey);
+                }
             }
 
-            // Return cleaned text
-            return (ActionResult)new OkObjectResult(JsonConvert.SerializeObject(result));
+            // Return journeys
+            return (ActionResult)new OkObjectResult(JsonConvert.SerializeObject(result.ToArray()));
         }
     }
 }

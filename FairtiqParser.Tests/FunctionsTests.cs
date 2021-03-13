@@ -16,6 +16,24 @@ namespace FairtiqParser.Tests
             {
                 new Dictionary<string, string>
                 {
+                    {"Date", "12.02.2021"},
+                    {"DepartureTime","18:33"},
+                    {"Start", "La Chaux-de-Fonds"},
+                    {"ArrivalTime","18:44"},
+                    {"Destination","St-Imier" },
+                    {"Cost","2.20"}
+                },
+                new Dictionary<string, string>
+                {
+                    {"Date", "12.02.2021"},
+                    {"DepartureTime","23:17"},
+                    {"Start", "St-Imier"},
+                    {"ArrivalTime","23:32"},
+                    {"Destination","La Chaux-de-Fonds"},
+                    {"Cost","2.20"}
+                },
+                new Dictionary<string, string>
+                {
                     {"Date", "16.02.2021"},
                     {"DepartureTime","06:57"},
                     {"Start", "La Chaux-de-Fonds"},
@@ -41,6 +59,24 @@ namespace FairtiqParser.Tests
                     {"Destination","La Chaux-de-Fonds"},
                     {"Cost","1.40"}
                 },
+                new Dictionary<string, string>
+                {
+                    {"Date", "22.02.2021"},
+                    {"DepartureTime","07:02"},
+                    {"Start", "La Chaux-de-Fonds"},
+                    {"ArrivalTime","07:57"},
+                    {"Destination","Murten/Morat" },
+                    {"Cost","7.10"}
+                },
+                new Dictionary<string, string>
+                {
+                    {"Date", "22.02.2021"},
+                    {"DepartureTime","17:04"},
+                    {"Start", "Murten/Morat"},
+                    {"ArrivalTime","18:00"},
+                    {"Destination","La Chaux-de-Fonds" },
+                    {"Cost","6.50"}
+                }
             };
 
 
